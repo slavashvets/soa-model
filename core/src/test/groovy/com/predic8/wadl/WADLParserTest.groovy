@@ -2,12 +2,14 @@ package com.predic8.wadl
 
 import com.predic8.soamodel.Consts
 import com.predic8.xml.util.ClasspathResolver
+import org.junit.Ignore
 
+@Ignore
 class WADLParserTest extends GroovyTestCase {
 	
 	WADLParser parser = new WADLParser(resourceResolver: new ClasspathResolver())
 	Application wadl
-	
+
 	void testParser(){
 		wadl = parser.parse('wadl/application.xml')
 		assert wadl.docs.size() == 2
