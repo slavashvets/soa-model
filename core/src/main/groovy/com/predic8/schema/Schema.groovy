@@ -32,7 +32,7 @@ import com.predic8.xml.util.PrefixedName
 import com.predic8.xml.util.ResourceResolver
 
 class Schema extends SchemaComponent{
-  
+
   public final static JQName ELEMENTNAME = new JQName(SCHEMA_NS, 'schema')
   public final static JQName STRING = new JQName(SCHEMA_NS, 'string')
   public final static JQName INT = new JQName(SCHEMA_NS, 'int')
@@ -249,7 +249,8 @@ class Schema extends SchemaComponent{
   }
 
   List<Schema> getImportedSchemas(importedSchemas){
-    log.debug "imported Schemas: ${importedSchemas.targetNamespace}"
+    if (log.isDebugEnabled()) { log.debug "imported Schemas: ${importedSchemas.targetNamespace}" }
+
     def schemas = []
     imports.each { imp ->
       def schema
@@ -262,7 +263,7 @@ class Schema extends SchemaComponent{
       }
       if(schema && !(importedSchemas.contains(schema))) {
         schemas << schema
-        schemas.addAll(schema.getImportedSchemas(schemas+importedSchemas))
+        schemas.addAll(schema.getImportedSchemas(schemas + importedSchemas))
       }
     }
 
