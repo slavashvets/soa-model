@@ -30,37 +30,37 @@ class ElementRefDiffTest extends GroovyTestCase {
 
 	void testRootElementsAdded() {
 		def diffs = compare(schemaWithName, schemaWithRef)
-		assert diffs[0].description == 'Element bar with minoccurs 1 removed.'
+		assert diffs[0].description == 'Element bar with minOccurs 1 removed.'
 	}
 	
 	void testRootElementsReplaced() {
 		def diffs = compare(schemaWithRef, schemaWithName)
-		assert diffs[0].description == 'Element foo with minoccurs 1 removed.'
+		assert diffs[0].description == 'Element foo with minOccurs 1 removed.'
 	}
 	
 	void testSequnceDiff() {
 		def diffs = compare(schemaWithRef, schemaWithName)
 		assert diffs[7].description == 'ComplexType CT4:'
 		assert diffs[7].diffs[0].type == 'sequence'
-		assert diffs[7].diffs[0].diffs[0].description == 'Element E1 with minoccurs 1 removed.'
-		assert diffs[7].diffs[0].diffs[1].description == 'Element E2 with minoccurs 1 removed.'
+		assert diffs[7].diffs[0].diffs[0].description == 'Element E1 with minOccurs 1 removed.'
+		assert diffs[7].diffs[0].diffs[1].description == 'Element E2 with minOccurs 1 removed.'
 		assert diffs[7].diffs[0].diffs[2].description == 'Position of element E3 changed from 3 to 2.'
 		assert diffs[7].diffs[0].diffs[3].description == 'Position of element E4 changed from 4 to 3.'
-		assert diffs[7].diffs[0].diffs[4].description == 'Element ref to tns:foo with minoccurs 1 removed.'
+		assert diffs[7].diffs[0].diffs[4].description == 'Element ref to tns:foo with minOccurs 1 removed.'
 		assert diffs[7].diffs[0].diffs[5].description == 'Particle choice on position 6 replaced with any.'
-		assert diffs[7].diffs[0].diffs[6].description == 'Element E5 with minoccurs 1 added to position 1.'
-		assert diffs[7].diffs[0].diffs[7].description == 'Element E6 with minoccurs 1 added to position 4.'
-		assert diffs[7].diffs[0].diffs[8].description == 'Element ref to tns:bar with minoccurs 1 added to position 5.'
-		assert diffs[7].diffs[0].diffs[9].description == 'any added to position 7.'
+		assert diffs[7].diffs[0].diffs[6].description == 'Element E5 with minOccurs 1 added to position 1.'
+		assert diffs[7].diffs[0].diffs[7].description == 'Element E6 with minOccurs 1 added to position 4.'
+		assert diffs[7].diffs[0].diffs[8].description == 'Element ref to tns:bar with minOccurs 1 added to position 5.'
+		assert diffs[7].diffs[0].diffs[9].description == 'any added to position 7(end of sequence).'
 	}
 	
 	void testRefInChoice() {
 		//Simulate WSDLDiffGenerator with compare4WSDL:true
 		def diffs = new SchemaDiffGenerator(a: schemaWithRef, b: schemaWithName, compare4WSDL:true).compare()
-		assert diffs[3].diffs[0].description == "The type of element 'RefTestInChoice' has changed from xsd:string to xsd:int."
+		assert diffs[3].diffs[0].description == "The type of element 'RefTestInChoice' changed from xsd:string to xsd:int."
 		assert diffs[6].diffs[0].diffs[3].diffs[0].description == 'Element ref to tns:RefTestInChoice:'
 		assert diffs[6].diffs[0].diffs[3].diffs[0].diffs[0].description == 'Element RefTestInChoice:'
-		assert diffs[6].diffs[0].diffs[3].diffs[0].diffs[0].diffs[0].description == "The type of element 'RefTestInChoice' has changed from xsd:string to xsd:int."
+		assert diffs[6].diffs[0].diffs[3].diffs[0].diffs[0].diffs[0].description == "The type of element 'RefTestInChoice' changed from xsd:string to xsd:int."
 	}
 	
 	private def compare(a, b) {

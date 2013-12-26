@@ -27,11 +27,11 @@ class ElementDiffGenerator extends UnitDiffGenerator {
 	}
 
 	def labelElementRemoved, labelElementAdded, labelElement,  labelHasChanged, labelTypeElement, labelTo,
-	labelEmbeddedStandAlone, labelEmbedded, labelAttributeMinOccurs, labelAttributeMaxOccurs, labelFrom
+	labelEmbeddedStandAlone, labelEmbedded, labelFrom
 
-	def removed = {new Difference(description:"${labelElementRemoved}.", type: 'element', breaks: a.exchange? true : false, exchange: a.exchange)}
+	def removed = {new Difference(description:"${labelElementRemoved}.", type: 'element', breaks: ctx.exchange ? true: null, exchange: a.exchange)}
 
-	def added = { new Difference(description:"${labelElementAdded}.", type: 'element', breaks: b.exchange? true : false, exchange: b.exchange)}
+	def added = { new Difference(description:"${labelElementAdded}.", type: 'element', breaks: ctx.exchange ? true: null, exchange: b.exchange)}
 
 	def changed = { diffs ->
 		new Difference(description:"${labelElement} ${a.name ?: 'ref to ' + a.refValue}:" , type: 'element' ,  diffs : diffs, exchange: a.exchange)
@@ -54,31 +54,38 @@ class ElementDiffGenerator extends UnitDiffGenerator {
 	protected List<Difference> compareType(){
 		if(a.embeddedType && b.embeddedType) return compareEmbeddedType()
 		if(a.embeddedType && b.type) return [
-				new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelEmbeddedStandAlone}.", type: 'element', warning: true, exchange: a.exchange)
+				new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelEmbeddedStandAlone}.", type: 'element', warning:ctx.exchange?true:null, exchange: a.exchange)
 			]
 		if(a.type && b.embeddedType) return [
-				new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelEmbedded}.", type: 'element', warning: true, exchange: a.exchange)
+				new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelEmbedded}.", type: 'element', warning:ctx.exchange?true:null, exchange: a.exchange)
 			]
 		if (!b.metaClass.hasProperty(b, 'type')) return [
 				new Difference(description: "${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} ${a.schema.getPrefix(a.type?.namespaceURI)?:'xsd'}:${a.type?.localPart} ${labelTo} ${b.toString()}.",
-				type: 'element', breaks: true, exchange: a.exchange)
+				type: 'element', breaks: ctx.exchange?true:null, exchange: a.exchange)
 			]
 		if(a.type != b.type) return [
 				new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} ${a.schema.getPrefix(a.type.namespaceURI)?:'xsd'}:${a.type.localPart} ${labelTo} ${b.schema.getPrefix(b.type.namespaceURI)?:'xsd'}:${b.type.localPart}.",
-				type: 'element', breaks:true, exchange: a.exchange)
+				type: 'element', breaks:ctx.exchange?true:null, exchange: a.exchange)
 			]
 		[]
 	}
 
 	protected List<Difference> compareMinMaxOccurs(eType = 'element'){
 		def lDiffs = []
-		def nameOrRef = (eType == 'any') ? 'any' : "element ${a.name ?: 'ref to ' + a.refValue}"
+//		def nameOrRef = (eType == 'any') ? 'any' : "element ${a.name ?: 'ref to ' + a.refValue}"
 		if(a.minOccurs != b.minOccurs){
-			lDiffs << new Difference(description: "${labelAttributeMinOccurs} $nameOrRef ${labelHasChanged} ${labelFrom} ${a.minOccurs} ${labelTo} ${b.minOccurs}.",
-				 type: eType, safe:  a.minOccurs >= b.minOccurs, warning: true)
+			def warning 
+			if(ctx.exchange == 'request' && b.minOccurs > a.minOccurs) warning = true
+			if(ctx.exchange == 'response' && b.minOccurs < a.minOccurs) warning = true
+			lDiffs << new Difference(description: "MinOccurs ${labelHasChanged} ${labelFrom} ${a.minOccurs} ${labelTo} ${b.minOccurs}.",
+				 type: eType, warning: warning, safe : ctx.exchange? !warning : null)
 		}
 		if(a.maxOccurs != b.maxOccurs){
-			lDiffs << new Difference(description:"${labelAttributeMaxOccurs} $nameOrRef ${labelHasChanged} ${labelFrom} ${a.maxOccurs} ${labelTo} ${b.maxOccurs}.", type: eType, safe:  a.maxOccurs <= b.maxOccurs, warning: true)
+			def warning
+			if(ctx.exchange == 'request' && a.maxOccurs > b.maxOccurs) warning = true
+			if(ctx.exchange == 'response' && a.maxOccurs < b.maxOccurs) warning = true
+			lDiffs << new Difference(description:"MaxOccurs ${labelHasChanged} ${labelFrom} ${a.maxOccurs} ${labelTo} ${b.maxOccurs}.",
+				type: eType, warning: warning, safe : ctx.exchange? !warning : null)
 		}
 		lDiffs
 	}
@@ -119,8 +126,8 @@ class ElementDiffGenerator extends UnitDiffGenerator {
 		labelTypeElement = bundle.getString("com.predic8.schema.diff.labelTypeElement")
 		labelEmbeddedStandAlone = bundle.getString("com.predic8.schema.diff.labelEmbeddedStandAlone")
 		labelEmbedded = bundle.getString("com.predic8.schema.diff.labelEmbedded")
-		labelAttributeMinOccurs = bundle.getString("com.predic8.schema.diff.labelAttributeMinOccurs")
-		labelAttributeMaxOccurs = bundle.getString("com.predic8.schema.diff.labelAttributeMaxOccurs")
+//		labelAttributeMinOccurs = bundle.getString("com.predic8.schema.diff.labelAttributeMinOccurs")
+//		labelAttributeMaxOccurs = bundle.getString("com.predic8.schema.diff.labelAttributeMaxOccurs")
 		labelTo = bundle.getString("com.predic8.schema.diff.labelTo")
 		labelFrom = bundle.getString("com.predic8.schema.diff.labelFrom")
 
