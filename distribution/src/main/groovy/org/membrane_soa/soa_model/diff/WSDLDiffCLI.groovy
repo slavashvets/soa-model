@@ -120,8 +120,8 @@ class WSDLDiffCLI extends AbstractDiffCLI{
 
 		new File(reportFolder).mkdir()
 		File xml = new File("$reportFolder/diff-report.xml")
-		OutputStream outputStream = new FileOutputStream (xml);
-		writer.writeTo(outputStream);
+		OutputStream outputStream = new FileOutputStream (xml)
+		writer.writeTo(outputStream)
 		transform(new ByteArrayInputStream(writer.toByteArray()), 'html')
 	}
 
@@ -255,7 +255,7 @@ class WSDLDiffCLI extends AbstractDiffCLI{
 	}
 
 	public getStylesheet(format) {
-		"${System.getenv('SOA_MODEL_HOME')}/src/main/style/wsdl2"+format+".xsl"
+		this.class.getResourceAsStream("/style/wsdl2"+format+".xsl")
 	}
 
 	public getDiffGenerator(doc1, doc2) {
