@@ -14,12 +14,13 @@
 
 package org.membrane_soa.soa_model.analyzer
 
+import groovy.org.membrane_soa.soa_model.ResourceLists
 import groovy.xml.MarkupBuilder
 
 import com.predic8.wsdl.Definitions
 import com.predic8.wsdl.WSDLParser
 
-class WSDLAnalyzer{
+class WSDLAnalyzer {
 
 	String url
 	String reportFolder = 'analyzewsdl-report'
@@ -64,9 +65,9 @@ class WSDLAnalyzer{
 	}
 
 	void dump(){
-		new File(reportFolder).mkdir()
-		new File("$reportFolder/web").mkdir()
-		copy("${System.getenv('SOA_MODEL_HOME')}/src/web","$reportFolder/web")
+        ResourceLists.copyWebResources(reportFolder)
+        ResourceLists.copyImageResources(reportFolder)
+
 		def writer = new FileWriter(new File("$reportFolder/index.htm"))
 		builder = new MarkupBuilder(writer)
 		builder.html(){
