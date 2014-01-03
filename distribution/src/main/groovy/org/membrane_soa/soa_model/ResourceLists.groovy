@@ -18,7 +18,7 @@ class ResourceLists {
     }
 
     static copyImageResources(String baseDir) {
-        new File("$baseDir/${IMAGE_DIR}").mkdirs()
+        new File("$baseDir${IMAGE_DIR}").mkdirs()
         IMAGE_LIST.each { fileName ->
             new File("$baseDir${IMAGE_DIR}/$fileName").withOutputStream { out ->
                 out << this.class.getResourceAsStream("${IMAGE_DIR}/$fileName")
