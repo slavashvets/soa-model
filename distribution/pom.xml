@@ -3,7 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.predic8</groupId>
 	<artifactId>soa-model-distribution</artifactId>
+<<<<<<< HEAD
 	<version>1.4.2.3-IXSTABLE-SNAPSHOT</version>
+=======
+	<version>1.4.2.4</version>
+>>>>>>> master
 
 	<dependencies>
 		<dependency>

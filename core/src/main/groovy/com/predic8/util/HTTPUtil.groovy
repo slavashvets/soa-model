@@ -14,17 +14,19 @@
 
 package com.predic8.util
 
-import com.predic8.schema.*
+import com.predic8.schema.Import as SchemaImport
+import com.predic8.wsdl.Import as WsdlImport
 
 class HTTPUtil {
   
   public static String updateBaseDir(input,oldBaseDir) {
-    if(input instanceof Import) input = input.schemaLocation
+    if(input instanceof SchemaImport) input = input.schemaLocation
+		if(input instanceof WsdlImport) input = input.location
     if(! (input instanceof String)) return oldBaseDir
        
     def comps = input.split(/[\\\/]/)
     
-		//Find out if input a an absolute adress. If so, the oldBaseDir is not needed.
+		//Find out if input is an absolute adress. If so, the oldBaseDir is not needed.
     if(input.startsWith('/') || input.startsWith('\\') || input.startsWith('http') || input.matches(/^([A-Z]|[a-z]):\/.*$/)){
       return comps[0..-2].join('/')+'/'
     }
