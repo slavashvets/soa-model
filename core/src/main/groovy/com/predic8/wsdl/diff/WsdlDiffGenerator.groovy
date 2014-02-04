@@ -20,6 +20,7 @@ import com.predic8.schema.Element;
 import com.predic8.schema.diff.*
 import com.predic8.soamodel.*
 import com.predic8.wsdl.*
+import com.sun.org.apache.bcel.internal.generic.LDIV;
 
 class WsdlDiffGenerator extends AbstractDiffGenerator{
 
@@ -52,6 +53,8 @@ class WsdlDiffGenerator extends AbstractDiffGenerator{
 		
 		diffs.addAll(compareTypes())
 
+		diffs.addAll(compareBindings())
+		
 		lDiffs.addAll(compareDocumentation(a.services[0], b.services[0]))
 		if ( a.services[0] && b.services[0] ) {
 			lDiffs.addAll(comparePorts())
@@ -182,10 +185,10 @@ class WsdlDiffGenerator extends AbstractDiffGenerator{
 		def diffs = []
 		def faults = aFaults.message.qname.intersect(bFaults.message.qname)
 		(aFaults.message.qname - faults).each {
-			diffs << new Difference(description:"Fault with message ${it} removed.", type: 'fault', exchange:exchange)
+			diffs << new Difference(description:"Fault with message ${it} removed.", type: 'fault', exchange:[exchange])
 		}
 		(bFaults.message.qname - faults).each {
-			diffs << new Difference(description:"Fault with message ${it} added.", type: 'fault', exchange:exchange)
+			diffs << new Difference(description:"Fault with message ${it} added.", type: 'fault', exchange:[exchange])
 		}
 		faults.each { f ->
 			diffs.addAll(comparePortTypeMessage(aFaults.find{it.message.name == f}, bFaults.find{it.message.name == f}, exchange))
@@ -329,6 +332,38 @@ class WsdlDiffGenerator extends AbstractDiffGenerator{
 			return [
 				new Difference(description:"Documentation has changed.", breaks : false, safe : true, type: 'documentation')
 			]
+		[]
+	}
+	
+	private List<Difference> compareBindings(){
+		def aBindings = a.bindings
+		def bBindings = b.bindings
+		def diffs = []
+		diffs.addAll(compare(aBindings, bBindings,
+			{ new Difference(description:"Binding ${it.name} removed.", original: it, type:'binding') },
+			{ new Difference(description:"Binding ${it.name} added.", modified: it, type:'binding') }))
+		
+		def bndNames = aBindings.name.intersect(bBindings.name)
+		bndNames.each{ bndName ->
+			//TODO Test if input/output name matches.
+			Binding aBinding= aBindings.find{it.name == bndName}
+			Binding bBinding= bBindings.find{it.name == bndName}
+			diffs.addAll(compareBinding(aBinding, bBinding))
+		}
+		diffs
+	}
+	
+	private List<Difference> compareBinding(Binding a, Binding b){
+		def lDiffs = []
+		if(a.protocol != b.protocol) {
+			lDiffs.add(new Difference(description:"Protocol changed from '${a.protocol}' to '${b.protocol}'", type:'protocol'))
+		}
+		if(a.protocol != 'HTTP' && b.protocol != 'HTTP') {
+			if(a.style != b.style) {
+				lDiffs.add(new Difference(description:"Style changed from '${a.style}' to '${b.style}'", type:'style'))
+			}
+		}
+		if(lDiffs) return [new Difference(description:"Binding ${a.name} changed:", diffs: lDiffs, type:'binding')]
 		[]
 	}
 
