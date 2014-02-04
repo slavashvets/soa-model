@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="http://xsdInternalChangesXX/v001"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://xsdInternalChangesXX/v001">
+
+    <xsd:element name="simpleDescription" type="xsd:string"/>
+
+</xsd:schema>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema
+	targetNamespace="http://myservice.be/MyOtherServiceMessages/v001"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:srv="http://myservice.be/MyOtherServiceMessages/v001"
+	xmlns:itemsInput="http://myservice.be/InputCatalog/v001"
+	xmlns:itemsOutput="http://myservice.be/OutputCatalog/v001">
+
+	<xsd:import
+		schemaLocation="InputCatalog_v001.xsd"
+		namespace="http://myservice.be/InputCatalog/v001" />
+	<xsd:import
+		schemaLocation="OutputCatalog_v001.xsd"
+		namespace="http://myservice.be/OutputCatalog/v001" />
+
+
+	<xsd:element name="getOtherDefinitionsRequest" type="srv:getOtherDefinitionsRequestType" />
+	<xsd:element name="getOtherDefinitionsResponse" type="srv:getOtherDefinitionsResponseType" />
+
+	<xsd:complexType name="getOtherDefinitionsRequestType">
+		<xsd:sequence>
+			<xsd:element ref="itemsInput:flowType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="getOtherDefinitionsResponseType">
+		<xsd:sequence>
+			<xsd:element ref="itemsOutput:subItemTypeA" maxOccurs="10" minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="http://simpleTypeChanges/v001"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://simpleTypeChanges/v001">
+
+    <xsd:element name="price" type="priceComplexType"/>
+    <xsd:complexType name="priceComplexType">
+        <xsd:sequence>
+            <xsd:element ref="tns:currency"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="currency" type="tns:currencyType"/>
+    <xsd:simpleType name="currencyType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="pounds" />
+            <xsd:enumeration value="euros" />
+            <xsd:enumeration value="yen" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="changeRestrictionBaseType">
+        <xsd:restriction base="xsd:boolean">
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="introduceEnumeration">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="pounds" />
+            <xsd:enumeration value="euros" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="fromBooleanToString" type="xsd:boolean"/>
+    <xsd:element name="changeComplexType" type="tns:simpleTimeValueType"/>
+
+
+    <xsd:complexType name="timeValueType">
+        <xsd:simpleContent>
+            <xsd:extension base="tns:simpleTimeValueType">
+                <xsd:attribute name="description" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="simpleTimeValueType">
+        <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\d{2}:\d{2}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="http://xsdInternalChanges/v001"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://xsdInternalChanges/v001">
+
+    <xsd:import
+            schemaLocation="BusinessException_v001.xsd"
+            namespace="http://myservice.be/BusinessException/v001" />
+
+    <xsd:element name="simpleDescription" type="xsd:string"/>
+
+</xsd:schema>
