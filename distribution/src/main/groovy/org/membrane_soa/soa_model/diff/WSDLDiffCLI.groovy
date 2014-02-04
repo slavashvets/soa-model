@@ -115,7 +115,14 @@ class WSDLDiffCLI extends AbstractDiffCLI{
 			Diffs{
 				diffs.each{ diff -> dump(diff) }
 			}
-			operationPages.each { createOperationPage(it) }
+			operationPages.each {
+                try {
+                    createOperationPage(it)
+                } catch(Exception e) {
+                    println "Error creating operation page: $e.message"
+                    e.printStackTrace()
+                }
+            }
 		}
 
 		new File(reportFolder).mkdir()
