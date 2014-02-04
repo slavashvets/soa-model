@@ -50,6 +50,10 @@ class BaseCompareSpec extends Specification {
         DU.findChange(changes, type, args)
     }
 
+    List<Difference> findChanges (List<Difference> changes, ChangeType type, Map args = [:]) {
+        DU.findChanges(changes, type, args)
+    }
+
     Difference findChangeByDescription (List<Difference> changes, regex) {
         def differences = findChangesByDescription(changes, regex)
         if (differences.size() > 1) {

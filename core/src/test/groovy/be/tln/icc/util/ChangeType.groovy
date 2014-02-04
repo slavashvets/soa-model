@@ -12,6 +12,7 @@ public enum ChangeType {
     ENUM_VALUE_REMOVED([EnumerationValueRemovedChange]),
     SEQ_ADDED([SequenceAddedChange]),
     ELEMENT_ADDED([ElementAddedChange]),
+    ELEMENT_CHANGED([ElementChanged]),
     ELEMENT_REMOVED([ElementRemovedChange]),
     MIN_OCCURS([MinOccursChange]),
     IMPORT_REMOVED([ImportRemovedChange]),
