@@ -77,7 +77,7 @@
 				<version>2.4</version>
 				<configuration>
 					<excludes>
-						<exclude>style/**</exclude>
+						<!--<exclude>style/**</exclude>-->
 						<exclude>web/**</exclude>
 					</excludes>
 				</configuration>
