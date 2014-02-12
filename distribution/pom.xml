@@ -76,10 +76,10 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
-					<excludes>
+					<!--<excludes>-->
 						<!--<exclude>style/**</exclude>-->
-						<exclude>web/**</exclude>
-					</excludes>
+						<!--<exclude>web/**</exclude>-->
+					<!--</excludes>-->
 				</configuration>
 			</plugin>
 			<plugin>
