@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="http://myservices.be/InputCatalog/v001"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://myservices.be/InputCatalog/v001" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+    <xsd:element name="flowType">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element name="subFlowType1" type="xsd:string"/>
+                <xsd:element name="subFlowType2" type="xsd:string"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+
+</xsd:schema>

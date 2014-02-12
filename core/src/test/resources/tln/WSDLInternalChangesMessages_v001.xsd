@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema
+        targetNamespace="http://myservice.be/MyOtherServiceMessages/v001"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://myservice.be/MyOtherServiceMessages/v001">
+
+
+    <xsd:element name="getOtherDefinitionsRequest" type="tns:getOtherDefinitionsRequestType" />
+    <xsd:element name="getOtherDefinitionsResponse" type="tns:getOtherDefinitionsResponseType" />
+
+    <xsd:complexType name="getOtherDefinitionsRequestType">
+        <xsd:choice>
+            <xsd:element name="definitions" type="xsd:string"/>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:complexType name="getOtherDefinitionsResponseType">
+        <xsd:choice>
+            <xsd:element name="definitions" type="xsd:string"/>
+        </xsd:choice>
+    </xsd:complexType>
+</xsd:schema>

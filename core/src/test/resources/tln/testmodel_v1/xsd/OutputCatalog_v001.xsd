@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema
+	targetNamespace="http://myservice.be/OutputCatalog/v001"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://myservice.be/OutputCatalog/v001">
+
+	<xsd:element name="subItemTypeA" type="tns:subItemTypeAType"/>
+    <xsd:complexType name="subItemTypeAType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:itemTypeType" />
+			<xsd:element name="stockA" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+    <xsd:element name="subItemTypeB" type="subItemTypeBType"/>
+	<xsd:complexType name="subItemTypeBType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:itemTypeType" />
+			<xsd:element name="stockB" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+    <xsd:element name="itemType" type="tns:itemTypeType"/>
+	<xsd:complexType name="itemTypeType">
+		<xsd:sequence>
+			<xsd:element name="id" type="xsd:int" />
+			<xsd:element name="code" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
+

@@ -49,7 +49,7 @@ class WsdlDiffGeneratorTest extends GroovyTestCase {
   void testPortType() {
     def d = getDefinitions()
     d.portTypes[0].name = "ProjectServicePortType"
-    def diffs = compare(orig, d)
+    def diffs = new WsdlDiffGenerator(a:orig, b:d).comparePortTypes()
     assertEquals(1, diffs.size())
 		assert diffs*.dump().toString().contains('PortType name has changed from ProjectServicePT to ProjectServicePortType.')
   }
@@ -76,6 +76,14 @@ class WsdlDiffGeneratorTest extends GroovyTestCase {
     d.portTypes[0].operations[0].input.name = "NewInputName"
     def diffs = compare(orig, d)
 		assert diffs*.dump().toString().contains('Name has changed from input1 to NewInputName.')
+  }
+  
+  void testBindingName() {
+  	Definitions d = getDefinitions()
+		d.bindings[0].name = "ProjectServiceTestBinding"
+		def diffs = compare(orig, d)
+		assert diffs*.dump().toString().contains('Binding ProjectServiceBinding removed.')
+		assert diffs*.dump().toString().contains('Binding ProjectServiceTestBinding added.')
   }
 
   private def compare(a, b) {

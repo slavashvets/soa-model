@@ -27,7 +27,7 @@ class SchemaDiffsInWSDL extends GroovyTestCase {
 
 	void testSchemaDiffsInDefinitions() {
 		def diffs = compare(original, modified)
-		assert diffs[0].diffs.size() == 2
+		assert diffs[0].diffs.size() == 4
 		assert diffs[0].diffs[0].type == 'portType'
 		assert diffs[0].diffs[1].type == 'types'
 		assert diffs[0].diffs[0].diffs[0].description == 'Operation create:'

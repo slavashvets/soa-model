@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.predic8</groupId>
 	<artifactId>soa-model-core</artifactId>
-	<version>1.4.2.3-IXSTABLE-SNAPSHOT</version>
+	<version>1.4.2.5-IXSTABLE-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
@@ -54,6 +54,12 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+            <version>0.7-groovy-2.0</version>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -108,7 +114,7 @@
 					<dependency>
 						<groupId>org.codehaus.groovy</groupId>
 						<artifactId>groovy-eclipse-compiler</artifactId>
-						<version>2.6.0-01</version>
+						<version>2.7.0-01</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -116,7 +122,7 @@
 			<plugin>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy-eclipse-compiler</artifactId>
-				<version>2.6.0-01</version>
+				<version>2.7.0-01</version>
 				<extensions>true</extensions>
 			</plugin>
 
@@ -165,7 +171,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.groovy</groupId>
 										<artifactId>groovy-eclipse-compiler</artifactId>
-										<versionRange>[2.6.0-01,)</versionRange>
+										<versionRange>[2.7.0-01,)</versionRange>
 										<goals>
 											<goal>add-groovy-build-paths</goal>
 										</goals>

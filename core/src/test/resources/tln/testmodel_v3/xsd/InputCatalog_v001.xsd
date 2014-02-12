@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="http://myservices.be/InputCatalog/v001"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://myservices.be/InputCatalog/v001">
+	
+	<xsd:simpleType name="flowType">
+		<xsd:annotation>
+			<xsd:documentation>Light or Full</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LIGHT" />
+			<xsd:enumeration value="FULL" />
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
