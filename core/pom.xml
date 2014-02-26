@@ -5,6 +5,17 @@
 	<artifactId>soa-model-core</artifactId>
 	<version>1.4.2.5-IXSTABLE-SNAPSHOT</version>
 
+	<dependencyManagement>
+	
+		<dependencies>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-eclipse-batch</artifactId>
+				<version>2.1.8-01</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -116,6 +127,11 @@
 						<artifactId>groovy-eclipse-compiler</artifactId>
 						<version>2.7.0-01</version>
 					</dependency>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-batch</artifactId>
+						<version>2.0.7-03</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 
@@ -124,6 +140,14 @@
 				<artifactId>groovy-eclipse-compiler</artifactId>
 				<version>2.7.0-01</version>
 				<extensions>true</extensions>
+				
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-batch</artifactId>
+						<version>2.0.7-03</version>
+					</dependency>
+				</dependencies>				
 			</plugin>
 
             <plugin>
