@@ -3,17 +3,16 @@ package be.tln.icc
 import be.tln.icc.util.EnhancedDifference
 import com.predic8.schema.diff.SchemaDiffGenerator
 import com.predic8.soamodel.Difference
-import spock.lang.Shared
 
-class SchemaDiffWithElementRefsTest extends BaseCompareSpec {
+class SchemaDiffWithElementRefsTest extends BaseCompareTest {
 
 
-    @Shared def refConstructV1 = "$baseResourceDir/RefConstructV1.xsd"
-    @Shared def refConstructV2 = "$baseResourceDir/RefConstructV2.xsd"
+    def refConstructV1 = "$baseResourceDir/RefConstructV1.xsd"
+    def refConstructV2 = "$baseResourceDir/RefConstructV2.xsd"
 
-    @Shared def differences
+    def differences
 
-    void setupSpec() {
+    void setUp() {
         differences = compareSchema(refConstructV1, refConstructV2)
     }
 
@@ -21,10 +20,7 @@ class SchemaDiffWithElementRefsTest extends BaseCompareSpec {
      * Tests that when a ref changes to another element that is of the same complex type
      * as the original element the difference is still detected.
      */
-    def "verify diff for ref to different element of same type"() {
-        when: ''
-
-        then: ''
+    void "test diff for ref to different element of same type"() {
         use(EnhancedDifference) {
             Difference topLevelDiff = new Difference().findUniqueByDescription(differences, /.*PostpaidComplexType.*/)
 
@@ -35,10 +31,7 @@ class SchemaDiffWithElementRefsTest extends BaseCompareSpec {
         }
     }
 
-    def "verify diff for ref to different elements with different type" () {
-        when: ''
-
-        then: ''
+    void "test diff for ref to different elements with different type" () {
         use(EnhancedDifference) {
             Difference topLevelDiff = new Difference().findUniqueByDescription(differences, /.*PrepaidComplexType.*/)
 
@@ -49,10 +42,7 @@ class SchemaDiffWithElementRefsTest extends BaseCompareSpec {
         }
     }
 
-    def "verify diff for ref changes inside choice" () {
-        when: ''
-
-        then: ''
+    void "test diff for ref changes inside choice" () {
         use(EnhancedDifference) {
             Difference topLevelDiff = new Difference().findUniqueByDescription(differences, /.*AnotherComplexType.*/)
 
@@ -65,10 +55,7 @@ class SchemaDiffWithElementRefsTest extends BaseCompareSpec {
         }
     }
 
-    def "verify diff for changes in subtree of types" () {
-        when: ''
-
-        then: ''
+    void "test diff for changes in subtree of types" () {
         use(EnhancedDifference) {
             Difference topLevelDiff = new Difference().findUniqueByDescription(differences, /.*DeepComplex.*/)
 

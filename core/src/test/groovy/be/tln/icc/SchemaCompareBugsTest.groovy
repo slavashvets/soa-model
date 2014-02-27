@@ -1,23 +1,17 @@
 package be.tln.icc
 
-import be.tln.icc.BaseCompareSpec
+class SchemaCompareBugsTest extends BaseCompareTest {
 
-class SchemaCompareBugsTest extends BaseCompareSpec {
-
-    def "verify schema comparison where simple type changes to choice" () {
-        when:
+    void "test schema comparison where simple type changes to choice" () {
         def differences = compareSchema(commonXsdV1, commonXsdV2)
 
-        then:
-        !differences.find { it.breaks() } //TODO switched after update cbe559dd5ec98bce9d9fc9e760e3ea5a7e46541e
+        assert !differences.find { it.breaks() } //TODO switched after update cbe559dd5ec98bce9d9fc9e760e3ea5a7e46541e
     }
 
-    def "verify schema comparison where choice changes to simple type" () {
-        when:
+    void "test schema comparison where choice changes to simple type" () {
         def differences = compareSchema(commonXsdV2, commonXsdV1)
 
-        then:
-        !differences.find { it.breaks() }  //TODO #193
+        assert !differences.find { it.breaks() }  //TODO #193
     }
 
 }

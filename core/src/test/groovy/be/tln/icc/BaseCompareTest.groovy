@@ -8,10 +8,9 @@ import com.predic8.soamodel.Difference
 import com.predic8.wsdl.Definitions
 import com.predic8.wsdl.WSDLParser
 import com.predic8.wsdl.diff.WsdlDiffGenerator
-import spock.lang.Specification
 import be.tln.icc.util.DifferencesUtil as DU
 
-class BaseCompareSpec extends Specification {
+abstract class BaseCompareTest extends GroovyTestCase {
 
     final static String baseResourceDir = './src/test/resources/tln'
 
