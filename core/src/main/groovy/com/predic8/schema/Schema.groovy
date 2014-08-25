@@ -300,7 +300,12 @@ class Schema extends SchemaComponent{
     ct.schema = this
     complexTypes << ct
   }
+
+  public boolean remove(ComplexType ct){
+	  complexTypes.remove(ct)
+ }
   
+    
   ComplexType newComplexType(String name){
     def ct = new ComplexType(name: name, qname: new QName(targetNamespace, name), schema: this, parent: this)
     complexTypes << ct
@@ -320,11 +325,19 @@ class Schema extends SchemaComponent{
 		simpleTypes << st
 		st
 	}
+	
+	boolean remove(SimpleType st) {
+		simpleTypes.remove(st)
+	}
   
   Element newElement(String name, JQName type){
     def e = new Element(name: name, type: new QName(type.namespaceURI, type.localPart), schema: this, parent: this)
     elements << e
     e
+  }
+  
+  boolean remove(Element e) {
+	  elements.remove(e)
   }
   
   Element newElement(String name, String type){
