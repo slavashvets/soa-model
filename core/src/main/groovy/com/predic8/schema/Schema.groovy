@@ -302,7 +302,15 @@ class Schema extends SchemaComponent{
   }
 
   public boolean remove(ComplexType ct){
-	  complexTypes.remove(ct)
+	  
+	  // weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
+	  for(int index=0; index<complexTypes.size(); index++) {
+		  if(complexTypes.get(index).getQname().equals(ct.getQname())) {
+			  complexTypes.remove(index)
+			  return true;
+		  }
+	  }
+	  false
  }
   
     
@@ -326,9 +334,17 @@ class Schema extends SchemaComponent{
 		st
 	}
 	
-	boolean remove(SimpleType st) {
-		simpleTypes.remove(st)
-	}
+	boolean remove(SimpleType st) {	
+		// weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
+	  // weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
+	  for(int index=0; index<simpleTypes.size(); index++) {
+		  if(simpleTypes.get(index).getQname().equals(st.getQname())) {
+			  simpleTypes.remove(index)
+			  return true;
+		  }
+	  }
+	  false  
+  }
   
   Element newElement(String name, JQName type){
     def e = new Element(name: name, type: new QName(type.namespaceURI, type.localPart), schema: this, parent: this)
@@ -337,7 +353,15 @@ class Schema extends SchemaComponent{
   }
   
   boolean remove(Element e) {
-	  elements.remove(e)
+	  
+	  // weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
+	  for(int index=0; index<elements.size(); index++) {
+		  if(elements.get(index).getQname().equals(e.getQname())) {
+			  elements.remove(index)
+		  	  return true;
+		  }
+	  }
+	  false
   }
   
   Element newElement(String name, String type){
