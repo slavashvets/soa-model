@@ -14,7 +14,7 @@
 
 package org.membrane_soa.soa_model.analyzer
 
-import groovy.org.membrane_soa.soa_model.ResourceLists
+import org.membrane_soa.soa_model.ResourceLists
 import groovy.xml.MarkupBuilder
 
 import com.predic8.wsdl.Definitions
