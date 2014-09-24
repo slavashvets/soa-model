@@ -1,4 +1,4 @@
-package groovy.org.membrane_soa.soa_model
+package org.membrane_soa.soa_model
 
 class ResourceLists {
 

@@ -14,7 +14,7 @@
 
 package org.membrane_soa.soa_model.diff
 
-import groovy.org.membrane_soa.soa_model.ResourceLists
+import org.membrane_soa.soa_model.ResourceLists
 
 import javax.xml.transform.Result
 import javax.xml.transform.Source
