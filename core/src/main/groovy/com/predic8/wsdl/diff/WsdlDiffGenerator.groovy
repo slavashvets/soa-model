@@ -191,7 +191,7 @@ class WsdlDiffGenerator extends AbstractDiffGenerator{
 			diffs << new Difference(description:"Fault with message ${it} added.", type: 'fault', exchange:[exchange])
 		}
 		faults.each { f ->
-			diffs.addAll(comparePortTypeMessage(aFaults.find{it.message.name == f}, bFaults.find{it.message.name == f}, exchange))
+			diffs.addAll(comparePortTypeMessage(aFaults.find{it.message.qname == f}, bFaults.find{it.message.qname == f}, exchange))
 		}
 		diffs
 	}
