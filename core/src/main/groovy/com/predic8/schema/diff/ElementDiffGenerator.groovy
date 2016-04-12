@@ -16,11 +16,12 @@ import java.util.List;
 import com.predic8.schema.ComplexType;
 import com.predic8.soamodel.*
 
-import org.apache.commons.logging.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class ElementDiffGenerator extends UnitDiffGenerator {
 
-	private Log log = LogFactory.getLog(this.class)
+	private static final Logger log = LoggerFactory.getLogger(ElementDiffGenerator.class)
 
 	public ElementDiffGenerator() {
 		updateLabels()
@@ -63,19 +64,10 @@ class ElementDiffGenerator extends UnitDiffGenerator {
 				new Difference(description: "${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} ${a.schema.getPrefix(a.type?.namespaceURI)?:'xsd'}:${a.type?.localPart} ${labelTo} ${b.toString()}.",
 				type: 'element', breaks: ctx.exchange?true:null, exchange: a.exchange)
 			]
-		if(a.type != b.type) {
-				if(!a.type) {
-					return [new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} an empty element ${labelTo} ${b.schema.getPrefix(b.type.namespaceURI)?:'xsd'}:${b.type.localPart}.",
-						type: 'element', breaks:ctx.exchange?true:null, exchange: a.exchange)]
-	
-				} else if (!b.type) {
-					return [new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} ${a.schema.getPrefix(a.type.namespaceURI)?:'xsd'}:${a.type.localPart} ${labelTo} an empty element.",
-						type: 'element', breaks:ctx.exchange?true:null, exchange: a.exchange)]
-				} else {
-					return [new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} ${a.schema.getPrefix(a.type.namespaceURI)?:'xsd'}:${a.type.localPart} ${labelTo} ${b.schema.getPrefix(b.type.namespaceURI)?:'xsd'}:${b.type.localPart}.",
-					type: 'element', breaks:ctx.exchange?true:null, exchange: a.exchange)]
-				}
-		}
+		if(a.type != b.type) return [
+				new Difference(description:"${labelTypeElement} '${a.name}' ${labelHasChanged} ${labelFrom} ${a.schema.getPrefix(a.type.namespaceURI)?:'xsd'}:${a.type.localPart} ${labelTo} ${b.schema.getPrefix(b.type.namespaceURI)?:'xsd'}:${b.type.localPart}.",
+				type: 'element', breaks:ctx.exchange?true:null, exchange: a.exchange)
+			]
 		[]
 	}
 

@@ -1,4 +1,3 @@
-
 <assembly
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -32,11 +31,15 @@
 			<outputDirectory>/src/main/style</outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>/scripts</directory>
+			<directory>scripts</directory>
 			<includes>
-				<include>wsdldiff.bat</include>
-				<include>schemadiff.bat</include>
+				<include>analyzewsdl.*</include>
+				<include>create-request-template.*</include>
+				<include>schemadiff.*</include>
+				<include>wsdldiff.*</include>
 			</includes>
+			<!-- Execute permissions for scripts -->
+			<fileMode>0755</fileMode>
 			<outputDirectory>/bin</outputDirectory>
 			<filtered>true</filtered>
 		</fileSet>

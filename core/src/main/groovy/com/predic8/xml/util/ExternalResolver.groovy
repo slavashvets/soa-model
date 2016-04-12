@@ -11,7 +11,8 @@
 
 package com.predic8.xml.util
 
-import org.apache.commons.logging.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -29,7 +30,7 @@ import com.predic8.wadl.Include as WadlInclude
 
 class ExternalResolver extends ResourceResolver {
 
-	private Log log = LogFactory.getLog(this.class)
+	private static final Logger log = LoggerFactory.getLogger(ExternalResolver.class)
 
 	String proxyHost
 	int proxyPort
@@ -88,7 +89,7 @@ class ExternalResolver extends ResourceResolver {
 
 	protected resolveViaHttp(url) {
 		URI uri = new URI(url)
-		uri.normalize()
+		uri = uri.normalize()
 		new StringReader(resolveAsString(uri.toString()))
 	}
 

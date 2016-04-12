@@ -20,7 +20,8 @@ import groovy.xml.*
 
 import javax.xml.namespace.QName as JQName
 
-import org.apache.commons.logging.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import com.predic8.schema.creator.*
 import com.predic8.soamodel.*
@@ -29,14 +30,14 @@ import com.predic8.xml.util.PrefixedName
 import com.predic8.xml.util.ResourceResolver
 
 class Schema extends SchemaComponent{
-
+  
   public final static JQName ELEMENTNAME = new JQName(SCHEMA_NS, 'schema')
   public final static JQName STRING = new JQName(SCHEMA_NS, 'string')
   public final static JQName INT = new JQName(SCHEMA_NS, 'int')
   public final static JQName INTEGER = new JQName(SCHEMA_NS, 'integer')
   public final static JQName DATE = new JQName(SCHEMA_NS, 'date')
   
-  private Log log = LogFactory.getLog(this.class)
+  private static final Logger log = LoggerFactory.getLogger(Schema.class)
 
   /**
    * if the schema is embedded in a WSDL document, definitions is a reference 
@@ -274,8 +275,7 @@ class Schema extends SchemaComponent{
   }
 
   List<Schema> getImportedSchemas(importedSchemas){
-    if (log.isDebugEnabled()) { log.debug "imported Schemas: ${importedSchemas.targetNamespace}" }
-
+    log.debug "imported Schemas: ${importedSchemas.targetNamespace}"
     def schemas = []
     imports.each { imp ->
       def schema
@@ -288,7 +288,7 @@ class Schema extends SchemaComponent{
       }
       if(schema && !(importedSchemas.contains(schema))) {
         schemas << schema
-        schemas.addAll(schema.getImportedSchemas(schemas + importedSchemas))
+        schemas.addAll(schema.getImportedSchemas(schemas+importedSchemas))
       }
     }
 
@@ -300,20 +300,7 @@ class Schema extends SchemaComponent{
     ct.schema = this
     complexTypes << ct
   }
-
-  public boolean remove(ComplexType ct){
-	  
-	  // weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
-	  for(int index=0; index<complexTypes.size(); index++) {
-		  if(complexTypes.get(index).getQname().equals(ct.getQname())) {
-			  complexTypes.remove(index)
-			  return true;
-		  }
-	  }
-	  false
- }
   
-    
   ComplexType newComplexType(String name){
     def ct = new ComplexType(name: name, qname: new QName(targetNamespace, name), schema: this, parent: this)
     complexTypes << ct
@@ -333,35 +320,11 @@ class Schema extends SchemaComponent{
 		simpleTypes << st
 		st
 	}
-	
-	boolean remove(SimpleType st) {	
-		// weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
-	  // weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
-	  for(int index=0; index<simpleTypes.size(); index++) {
-		  if(simpleTypes.get(index).getQname().equals(st.getQname())) {
-			  simpleTypes.remove(index)
-			  return true;
-		  }
-	  }
-	  false  
-  }
   
   Element newElement(String name, JQName type){
     def e = new Element(name: name, type: new QName(type.namespaceURI, type.localPart), schema: this, parent: this)
     elements << e
     e
-  }
-  
-  boolean remove(Element e) {
-	  
-	  // weird way of deleting is due to the erratic implementation of equals on ComplexType, Element, SimpleType
-	  for(int index=0; index<elements.size(); index++) {
-		  if(elements.get(index).getQname().equals(e.getQname())) {
-			  elements.remove(index)
-		  	  return true;
-		  }
-	  }
-	  false
   }
   
   Element newElement(String name, String type){

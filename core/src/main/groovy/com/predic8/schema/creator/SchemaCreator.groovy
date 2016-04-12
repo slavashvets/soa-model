@@ -19,12 +19,13 @@ import com.predic8.schema.Sequence as SchemaSequence
 import com.predic8.schema.restriction.facet.*
 import com.predic8.schema.restriction.BaseRestriction;
 import com.predic8.xml.util.*
-import org.apache.commons.logging.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import static com.predic8.soamodel.Consts.SCHEMA_NS
 
 class SchemaCreator extends AbstractSchemaCreator <SchemaCreatorContext>{
 
-  private Log log = LogFactory.getLog(this.class)
+  private static final Logger log = LoggerFactory.getLogger(SchemaCreator.class)
 
   void createSchema(Schema schema, SchemaCreatorContext  ctx) {
     def attrs = [targetNamespace : schema.targetNamespace,
@@ -129,8 +130,11 @@ class SchemaCreator extends AbstractSchemaCreator <SchemaCreatorContext>{
   }
 
   void createComplexContent(ComplexContent complexContent, SchemaCreatorContext ctx){
-    builder.'xsd:complexContent'() {
+    def attrs = [:]
+    if(complexContent.mixed) attrs['mixed'] = 'true'
+    builder.'xsd:complexContent'(attrs) {
       complexContent.derivation?.create(this, ctx)
+	  complexContent.restriction?.create(this, ctx)
     }
   }
 
