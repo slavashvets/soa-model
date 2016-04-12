@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:msg="http://myservice.be/MyOtherServiceMessages/v001"
+        xmlns:businessexception="java:be.telenet.comm.soa.exception"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:srv="http://WSDLInternalChanges/v002"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        name="WSDLInternalChanges_v001"
+        targetNamespace="http://WSDLInternalChanges/v002">
+
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="http://myservice.be/MyOtherServiceMessages/v001" schemaLocation="WSDLInternalChangesMessages_v001.xsd"/>
+            <xsd:import namespace="java:be.telenet.comm.soa.exception" schemaLocation="BusinessException_v001.xsd"> </xsd:import>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getDefinitionsRequest">
+        <wsdl:part element="msg:getOtherDefinitionsRequest" name="getDefinitionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getDefinitionsResponse">
+        <wsdl:part element="msg:getOtherDefinitionsResponse" name="getDefinitionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="BusinessException">
+        <wsdl:part element="businessexception:BusinessException" name="BusinessException"/>
+    </wsdl:message>
+
+    <wsdl:portType name="IWSDLInternalChanges">
+        <wsdl:operation name="getDefinitions">
+            <wsdl:documentation>
+                <summary>1.0 :</summary>
+                <uses>WSDLInternalChangesMessages:getDefinitions : 1.0</uses>
+                <createdBy>1.0 : My SOA Services</createdBy>
+            </wsdl:documentation>
+            <wsdl:input message="srv:getDefinitionsRequest"/>
+            <wsdl:output message="srv:getDefinitionsResponse"/>
+            <wsdl:fault message="srv:BusinessException" name="BusinessException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getOtherStuff">
+            <wsdl:documentation>
+                <summary>1.0 :</summary>
+                <uses>WSDLInternalChangesMessages:getOtherStuff: 1.0</uses>
+                <createdBy>1.0 : My SOA Services</createdBy>
+            </wsdl:documentation>
+            <wsdl:input message="srv:getDefinitionsRequest"/>
+            <wsdl:output message="srv:getDefinitionsResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="WSDLInternalChanges_soaphttp" type="srv:IWSDLInternalChanges">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getDefinitions">
+            <soap:operation soapAction="http://xmlns.telenet.be/soa.model/services/common/channel/MigrationChannelService/FullMVNOMigrationChannelService/v001/other"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="WSDLInternalChangesService">
+        <wsdl:port binding="WSDLInternalChanges_soaphttp" name="WSDLInternalChanges_soaphttp">
+            <soap:address location="http://localhost:7001/WSDLInternalChangesService/ProxyServices/WSDLInternalChangesService_PS_v001/"/>
+        </wsdl:port>
+    </wsdl:service>
+
+
+</wsdl:definitions>

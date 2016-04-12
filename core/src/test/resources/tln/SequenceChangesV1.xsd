@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="http://sequenceChanges/v001"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://sequenceChanges/v001">
+
+    <xsd:element name="priceRef" type="priceRefComplexType"/>
+    <xsd:complexType name="priceRefComplexType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="tns:currency"/>
+            <xsd:element minOccurs="1" ref="tns:descriptionMandatoryToOptional"/>
+            <xsd:element minOccurs="0" ref="tns:descriptionOptionalToMandatory"/>
+            <xsd:element minOccurs="1" ref="tns:descriptionMandatoryToOptionalAndPlaceChanged"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="priceNonRef" type="priceNonRefComplexType"/>
+    <xsd:complexType name="priceNonRefComplexType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="nonRefOptionalToMandatory" type="tns:descriptionType"/>
+            <xsd:element minOccurs="1" name="nonRefMandatoryToOptional" type="tns:descriptionType"/>
+            <xsd:element minOccurs="0" name="nonRefOptionalRemoved" type="tns:descriptionType"/>
+            <xsd:element minOccurs="1" name="nonRefMandatoryRemoved" type="tns:descriptionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="replaceInlineByRef" type="replaceInlineByRefComplexType"/>
+    <xsd:complexType name="replaceInlineByRefComplexType">
+        <xsd:sequence>
+            <xsd:element name="simpleDescription" type="xsd:string"/>
+            <xsd:element name="currency">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="pounds" />
+                        <xsd:enumeration value="euros" />
+                        <xsd:enumeration value="dollars" />
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="description">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="descriptionText" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="replaceChoiceByOptionalElements" type="replaceChoiceByOptionalElementsComplexType"/>
+    <xsd:complexType name="replaceChoiceByOptionalElementsComplexType">
+        <xsd:sequence>
+            <xsd:element ref="tns:currency"/>
+            <xsd:choice>
+                <xsd:element ref="tns:simpleDescription"/>
+                <xsd:element ref="tns:description"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="moveElementIntoChoice" type="moveElementIntoChoiceComplexType"/>
+    <xsd:complexType name="moveElementIntoChoiceComplexType">
+        <xsd:sequence>
+            <xsd:element ref="tns:currency"/>
+            <xsd:element ref="tns:simpleDescription"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="currency" type="tns:currencyType"/>
+    <xsd:simpleType name="currencyType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="pounds" />
+            <xsd:enumeration value="euros" />
+            <xsd:enumeration value="dollars" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="description" type="tns:descriptionType"/>
+    <xsd:element name="descriptionMandatory" type="tns:descriptionType"/>
+    <xsd:element name="descriptionOptional" type="tns:descriptionType"/>
+    <xsd:element name="descriptionMandatoryToOptional" type="tns:descriptionType"/>
+    <xsd:element name="descriptionOptionalToMandatory" type="tns:descriptionType"/>
+    <xsd:element name="descriptionMandatoryToOptionalAndPlaceChanged" type="tns:descriptionType"/>
+    <xsd:complexType name="descriptionType">
+        <xsd:sequence>
+            <xsd:element name="descriptionText" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="simpleDescription" type="xsd:string"/>
+
+</xsd:schema>

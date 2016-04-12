@@ -14,7 +14,8 @@
 
 package com.predic8.wstool.creator
 
-import org.apache.commons.logging.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import com.predic8.schema.creator.*
 import com.predic8.schema.*
@@ -26,13 +27,13 @@ import groovy.xml.MarkupBuilderHelper
 
 class RequestCreator extends AbstractSchemaCreator<RequestCreatorContext> {
   
-  def log = LogFactory.getLog(this.class)
+  private static final Logger log = LoggerFactory.getLogger(RequestCreator.class)
   
   void createElement(Element element, RequestCreatorContext ctx){
 		
   	ctx.elements.add(element)
 		
-    if(element.fixedValue != null){  	// != null for empty strings
+    if(element.fixedValue){
 			yield("\n<!-- The value of this element is fixed and can not be modified. -->")
 			builder."${getElementTagName(element, ctx)}"(element.fixedValue)
 			return
@@ -81,7 +82,7 @@ class RequestCreator extends AbstractSchemaCreator<RequestCreatorContext> {
       builder."${getElementTagName(element, ctx)}"(entries[it],attrs)
     }
     if (!entries) {
-			if(element.defaultValue != null){  	// != null for empty strings
+			if(element.defaultValue){
 				yield("\n<!-- This element has a default value. -->")
 				builder."${getElementTagName(element, ctx)}"(element.defaultValue, attrs)
 				return
@@ -123,7 +124,7 @@ class RequestCreator extends AbstractSchemaCreator<RequestCreatorContext> {
   public getElementXpaths(ctx){
     def es = []
     ctx.formParams.keySet().each {
-      def e = it =~ /${ctx.path}${ctx.element.name}.*?\//
+      def e = it =~ /${ctx.path}${ctx.element.name}\/.*?/
       if (e)  es << e[0]
     }
     es.unique()

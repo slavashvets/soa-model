@@ -15,7 +15,6 @@ import groovy.json.JsonBuilder
 
 import static com.predic8.soamodel.Consts.SCHEMA_NS
 
-import org.apache.commons.logging.*
 import com.predic8.schema.*
 import com.predic8.schema.creator.*
 import com.predic8.wstool.creator.TemplateUtil
@@ -37,7 +36,12 @@ class JsonCreator extends AbstractSchemaCreator <JsonCreatorContext>{
 		element.schema.getElement(element.ref).create(this, ctx)
 			return
 		}
-		def type = element.schema.getType(element.type) ?: element.embeddedType
+		def type
+		if(!element.type) {
+			type = element.embeddedType
+		} else {
+			type = element.schema.getType(element.type) ?: element.embeddedType
+		}
 		if(type instanceof BuiltInSchemaType){
 			ctx.jsonElements[element.name] = TemplateUtil.getTemplateValue(type)
 			return

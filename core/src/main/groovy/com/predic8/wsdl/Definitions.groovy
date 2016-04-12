@@ -351,4 +351,8 @@ class Definitions extends WSDLElement{
 	String toString() {
 		"defintions[ baseDir=$baseDir, targetNamespace=$targetNamespace, namespaces=$namespaceContext, services=$localServices, documentation=$documentation, schemas=$localSchemas, bindings=$localBindings, messages=$localMessages, portTypes=$localPortTypes]"
 	}
+
+	public void removeLocalMessage(Message unusedMessage) {
+		localMessages.remove(unusedMessage);
+	}
 }

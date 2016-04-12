@@ -14,6 +14,8 @@
 
 package org.membrane_soa.soa_model.diff
 
+import org.membrane_soa.soa_model.ResourceLists
+
 import javax.xml.transform.Result
 import javax.xml.transform.Source
 import javax.xml.transform.Transformer
@@ -91,11 +93,12 @@ abstract class AbstractDiffCLI {
       Transformer stylesheet = xformFactory.newTransformer(xsl)
       Source inputXML  = new StreamSource(input)
 			
-			new File("$reportFolder/web").mkdirs()
-			Result result = new StreamResult(new FileWriter("$reportFolder/diff-report.$format"))
-			stylesheet.transform(inputXML, result)
+	  Result result = new StreamResult(new FileWriter("$reportFolder/diff-report.$format"))
+	  stylesheet.transform(inputXML, result)
 
-			copy("${System.getenv('SOA_MODEL_HOME')}/src/main/web","$reportFolder/web")
+      // Copy all js, css and image files
+      ResourceLists.copyWebResources(reportFolder)
+      ResourceLists.copyImageResources(reportFolder)
     }
     catch (TransformerException e) {
       System.err.println(e);

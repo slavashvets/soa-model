@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:msg="http://myservice.be/MyServiceMessages/v001" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:srv="http://my.be/MyService/v001" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="MyService_v001"
+	targetNamespace="http://my.be/MyService/v001">
+
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="http://myservice.be/MyServiceMessages/v001" schemaLocation="xsd/MyServiceMessages_v001.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+
+	<wsdl:message name="getDefinitionsRequest">
+		<wsdl:part element="msg:getDefinitionsRequest" name="getDefinitionsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getDefinitionsResponse">
+		<wsdl:part element="msg:getDefinitionsResponse" name="getDefinitionsResponse"/>
+	</wsdl:message>
+
+	<wsdl:portType name="IMyService">
+		<wsdl:operation name="getDefinitions">
+	        <wsdl:documentation>
+	            <summary>1.0 :</summary>
+	            <uses>MyService:getDefinitions : 1.0</uses>
+	            <createdBy>1.0 : My SOA Services</createdBy>
+	        </wsdl:documentation>
+			<wsdl:input message="srv:getDefinitionsRequest"/>
+			<wsdl:output message="srv:getDefinitionsResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+</wsdl:definitions>
