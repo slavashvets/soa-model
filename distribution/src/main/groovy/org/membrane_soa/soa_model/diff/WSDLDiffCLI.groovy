@@ -263,7 +263,7 @@ class WSDLDiffCLI extends AbstractDiffCLI{
 		new WSDLParser()
 	}
 
-	public InputStream getStylesheet(format) {
+	public InputStream getStylesheet(String format) {
 		this.class.getResourceAsStream("/style/wsdl2"+format+".xsl")
 	}
 

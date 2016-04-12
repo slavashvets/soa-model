@@ -71,7 +71,7 @@ class SchemaDiffCLI extends AbstractDiffCLI{
     new SchemaParser()
   }
   
-  public InputStream getStylesheet(format) {
+  public InputStream getStylesheet(String format) {
     InputStream styleSheet = this.class.getResourceAsStream("/style/schema2"+format+".xsl")
 	if(styleSheet == null) {
 		throw new AssertionError("Failed to load stylesheet for format "+format);
