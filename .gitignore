@@ -1,15 +1,15 @@
-core/target
-core/todo.txt
-distribution/bin
-distribution/report
-distribution/target
 ./metadata
-
 temp
-/core/src/test/groovy/com/predic8/wsdl/TemporaryTest.groovy
-/core/src/test/resources/wadl/yahoo.xml
-/.project
-/.settings/
+*/bin
+*/report
+*/target
+*/.settings
+*/.classpath
+*/.project
+*/.groovy
+.m2
+.idea
+*.iml
 
 # Ignore Gradle config dir
 .gradle

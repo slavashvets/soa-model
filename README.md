@@ -71,3 +71,13 @@ For Linux or Mac:
 For Windows:
 
     gradlew.bat build
+
+    
+Integration Testing
+-------------------
+
+To run "mvn integration-test" in an isolated environment, you may run
+
+    docker build .
+
+if you have a Docker Engine available.
